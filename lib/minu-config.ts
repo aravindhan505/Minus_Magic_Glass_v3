@@ -1,5 +1,8 @@
 // =============================================================
 // Minu's Magic Glasses — central, editable game configuration.
+
+/** TESTING: set false before release — unlocks all 5 levels on Planet Map. */
+export const TESTING_UNLOCK_ALL_LEVELS = true
 // Add / edit assets, levels and copy here without touching UI code.
 // =============================================================
 
@@ -44,23 +47,41 @@ export type Level = {
   icon: string
 }
 
+/** Planet Map illustrations — one PNG per level (transparent background). */
+export const planetImages: Record<number, string> = {
+  1: "/images/planets/planet-1-brightness.png",
+  2: "/images/planets/planet-2-color.png",
+  3: "/images/planets/planet-3-edges.png",
+  4: "/images/planets/planet-4-features.png",
+  5: "/images/planets/planet-5-classification.png",
+}
+
+/** Narrator clips that announce each planet name on the Planet Map. */
+export const planetAudio: Record<number, string> = {
+  1: "Pixel-to-Colors.mp3",
+  2: "Color-Potion-Time.mp3",
+  3: "Edge-Detection.mp3",
+  4: "Feature-Recognition.mp3",
+  5: "Object-Detection.mp3",
+}
+
 /** The 5 calibration stages. Reorder or add levels freely. */
 export const levels: Level[] = [
   {
     id: 1,
-    slug: "numbers-to-brightness",
-    title: "Numbers to Brightness",
+    slug: "pixel-to-colors",
+    title: "Pixel to Colors",
     subtitle: "Level 1",
-    description: "Teach Minu how computers store light as numbers.",
+    description: "Teach Minu how pixels turn into colors on screen.",
     color: "var(--chart-2)",
     icon: "Sun",
   },
   {
     id: 2,
-    slug: "brightness-in-color",
-    title: "Brightness in Color",
+    slug: "color-potion-time",
+    title: "Color Potion Time!",
     subtitle: "Level 2",
-    description: "Red, Green and Blue make every colour Minu sees.",
+    description: "Mix Red, Green and Blue potions to make every colour Minu sees.",
     color: "var(--chart-1)",
     icon: "Palette",
   },
@@ -84,10 +105,10 @@ export const levels: Level[] = [
   },
   {
     id: 5,
-    slug: "image-classification",
-    title: "Image Classification",
+    slug: "object-detection",
+    title: "Object Detection",
     subtitle: "Level 5",
-    description: "Teach Minu to sort pictures all on her own.",
+    description: "Teach Minu to spot and name objects in pictures.",
     color: "var(--chart-5)",
     icon: "Sparkles",
   },

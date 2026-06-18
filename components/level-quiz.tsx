@@ -20,6 +20,10 @@ type LevelQuizProps = {
   onBack: () => void
   /** Called when the quiz is failed (< threshold correct) */
   onFail: () => void
+  /** Hide "Practice More" on fail — only show Retry Quiz (Level 5) */
+  retryOnlyOnFail?: boolean
+  /** Tighter layout for Level 5 (fits h-dvh without scroll) */
+  compact?: boolean
 }
 
 /**
@@ -27,7 +31,14 @@ type LevelQuizProps = {
  * Supports visual multiple choice and hands-on slider challenges.
  * Tracks score and only calls onComplete when the pass threshold is met.
  */
-export function LevelQuiz({ questions, onComplete, onBack, onFail }: LevelQuizProps) {
+export function LevelQuiz({
+  questions,
+  onComplete,
+  onBack,
+  onFail,
+  retryOnlyOnFail,
+  compact,
+}: LevelQuizProps) {
   const [currentQ, setCurrentQ] = useState(0)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [sliderValues, setSliderValues] = useState<Record<string, number>>({})
@@ -156,13 +167,15 @@ export function LevelQuiz({ questions, onComplete, onBack, onFail }: LevelQuizPr
         </div>
         <SpeechBubble text="Don't give up! Let's try the quiz again! 💪" />
         <div className="flex gap-3">
-          <Button
-            variant="secondary"
-            onClick={onBack}
-            className="font-heading rounded-full px-6 font-bold"
-          >
-            <ArrowRight className="size-4 rotate-180" /> Practice More
-          </Button>
+          {!retryOnlyOnFail && (
+            <Button
+              variant="secondary"
+              onClick={onBack}
+              className="font-heading rounded-full px-6 font-bold"
+            >
+              <ArrowRight className="size-4 rotate-180" /> Practice More
+            </Button>
+          )}
           <Button
             onClick={onFail}
             className="font-heading rounded-full px-8 font-bold"
@@ -177,7 +190,12 @@ export function LevelQuiz({ questions, onComplete, onBack, onFail }: LevelQuizPr
   // ─── Question Screen ──────────────────────────────────
 
   return (
-    <div className="animate-pop-in flex w-full max-w-lg flex-col gap-6 rounded-3xl border border-border bg-card p-6">
+    <div
+      className={cn(
+        "animate-pop-in flex w-full max-w-lg flex-col rounded-3xl border border-border bg-card",
+        compact ? "max-h-full gap-3 overflow-y-auto p-4" : "gap-6 p-6",
+      )}
+    >
       {/* Progress indicator */}
       <div className="flex items-center gap-2">
         {questions.map((_, i) => (
@@ -204,13 +222,18 @@ export function LevelQuiz({ questions, onComplete, onBack, onFail }: LevelQuizPr
         </p>
       </div>
 
-      <p className="font-heading text-lg font-extrabold text-foreground text-balance">
+      <p
+        className={cn(
+          "font-heading font-extrabold text-foreground text-balance",
+          compact ? "text-base" : "text-lg",
+        )}
+      >
         {question.question}
       </p>
 
       {/* Visual choice options */}
       {question.type === "visual_choice" && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className={cn("grid grid-cols-2", compact ? "gap-2" : "gap-3")}>
           {question.options.map((option, i) => (
             <button
               key={i}
@@ -232,7 +255,7 @@ export function LevelQuiz({ questions, onComplete, onBack, onFail }: LevelQuizPr
                   src={option.imageSrc}
                   alt={option.label}
                   fill
-                  className="object-cover"
+                  className="object-contain p-2"
                   sizes="200px"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement

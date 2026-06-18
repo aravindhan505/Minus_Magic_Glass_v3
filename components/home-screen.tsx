@@ -67,10 +67,10 @@ export function HomeScreen({
       </header>
 
       <div className="animate-pop-in relative z-10 flex flex-col items-center gap-6 text-center">
-        <h1 className="font-heading text-neon text-5xl font-extrabold tracking-tight text-balance md:text-7xl">
+        <h1 className="font-arcade text-neon text-5xl font-extrabold tracking-tight text-balance md:text-7xl">
           Minu&apos;s Magic Glasses
         </h1>
-        <p className="max-w-md text-base font-semibold text-muted-foreground text-pretty md:text-lg">
+        <p className="max-w-md text-lg font-semibold text-muted-foreground text-pretty md:text-xl">
           Help Minu the alien learn to see! Discover how computers see the world across 5 fun levels.
         </p>
 
