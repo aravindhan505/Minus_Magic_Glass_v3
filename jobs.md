@@ -1,7 +1,7 @@
 # Minu's Magic Glasses — Project Status & Session Tracker
 
 **Last Updated:** June 18, 2026
-**Last Session:** Dev server fix — switched to webpack (avoids Turbopack file-lock crashes on Windows)
+**Last Session:** Vercel fix — pinned `pnpm@11.7.0` via `packageManager`, removed `package-lock.json` (commit 5b3ac42)
 
 ---
 
