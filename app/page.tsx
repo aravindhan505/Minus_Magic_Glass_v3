@@ -100,15 +100,41 @@ export default function Page() {
       )}
 
       {screen === "level" && activeLevel && (
-        <LevelScreen
-          level={activeLevel}
-          onBack={() => {
-            setMapFocusLevelId(activeLevel.id)
-            setScreen("map")
-          }}
-          onComplete={handleComplete}
-        />
-      )}
+       {screen === "level" && activeLevel && (
+  <div className="flex flex-col items-center justify-center min-h-screen bg-background text-center">
+    <LevelScreen
+      level={activeLevel}
+      onBack={() => {
+        setMapFocusLevelId(activeLevel.id)
+        setScreen("map")
+      }}
+      onComplete={handleComplete}
+    />
+
+    {/* Watch, Learn, and Quiz buttons */}
+    <div className="flex gap-4 mt-6">
+      <button
+        className="btn btn-primary"
+        onClick={() => window.location.href = `/planet/level${activeLevel.id}/watch`}
+      >
+        Watch
+      </button>
+      <button
+        className="btn btn-secondary"
+        onClick={() => window.location.href = `/planet/level${activeLevel.id}/learn`}
+      >
+        Learn
+      </button>
+      <button
+        className="btn btn-accent"
+        onClick={() => window.location.href = `/level-quiz`}
+      >
+        Quiz
+      </button>
+    </div>
+  </div>
+)}
+
 
       {/* Celebration overlay */}
       {celebrating && (
